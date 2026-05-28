@@ -1857,6 +1857,452 @@ footer {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* Theme Variables Classes */
+body.theme-matrix {
+  --bg: #030a05;
+  --surface: #06150b;
+  --surface2: #092111;
+  --surface3: #0c2c16;
+  --border: rgba(57, 255, 20, 0.08);
+  --border2: rgba(57, 255, 20, 0.16);
+  --border3: rgba(57, 255, 20, 0.24);
+  --text: #c0fcc6;
+  --text2: #39FF14;
+  --muted: #559e5e;
+  --accent: #39FF14;
+  --accent-small: #00FF66;
+  --name-gradient: linear-gradient(90deg, #39FF14, #00FF66);
+  --text-glow: 0 0 12px rgba(57, 255, 20, 0.4);
+}
+
+body.theme-cyberpunk {
+  --bg: #08030c;
+  --surface: #14081c;
+  --surface2: #1e0b2a;
+  --surface3: #280e38;
+  --border: rgba(255, 0, 127, 0.1);
+  --border2: rgba(0, 240, 255, 0.15);
+  --border3: rgba(255, 0, 127, 0.25);
+  --text: #eadef2;
+  --text2: #FF007F;
+  --muted: #a689b8;
+  --accent: #FF007F;
+  --accent-small: #00F0FF;
+  --name-gradient: linear-gradient(90deg, #FF007F, #00F0FF);
+  --text-glow: 0 0 12px rgba(255, 0, 127, 0.4);
+}
+
+body.theme-frost {
+  --bg: #02070c;
+  --surface: #06101c;
+  --surface2: #0a192c;
+  --surface3: #0d223c;
+  --border: rgba(139, 240, 255, 0.09);
+  --border2: rgba(139, 240, 255, 0.18);
+  --border3: rgba(139, 240, 255, 0.27);
+  --text: #e2f4f7;
+  --text2: #8bf0ff;
+  --muted: #7ca5b0;
+  --accent: #8bf0ff;
+  --accent-small: #8fdaff;
+  --name-gradient: linear-gradient(90deg, #8bf0ff, #8fdaff);
+  --text-glow: 0 0 12px rgba(139, 240, 255, 0.35);
+}
+
+/* Theme Switcher Styles */
+.theme-dropdown-container {
+  position: relative;
+  margin-right: 1rem;
+  z-index: 1100;
+}
+
+.theme-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 11px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  position: relative;
+}
+
+.theme-dropdown-trigger:hover {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.active-theme-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.theme-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: rgba(8, 8, 10, 0.95);
+  border: 1px solid var(--border3);
+  border-radius: 12px;
+  padding: 0.5rem;
+  min-width: 180px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.theme-dropdown-menu.show {
+  display: flex;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.theme-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  width: 100%;
+}
+
+.theme-menu-item:hover,
+.theme-menu-item.active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-color-preview {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.theme-color-preview.cozy { background: #F5E6C8; box-shadow: 0 0 6px #F5E6C8; }
+.theme-color-preview.matrix { background: #39FF14; box-shadow: 0 0 6px #39FF14; }
+.theme-color-preview.cyberpunk { background: #FF007F; box-shadow: 0 0 6px #FF007F; }
+.theme-color-preview.frost { background: #8bf0ff; box-shadow: 0 0 6px #8bf0ff; }
+
+/* Retro Terminal Window Styles */
+.terminal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 3, 5, 0.75);
+  backdrop-filter: blur(10px);
+  z-index: 100000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.terminal-overlay.show {
+  display: flex;
+}
+
+.terminal-container {
+  width: 100%;
+  max-width: 800px;
+  height: 520px;
+  background: rgba(10, 10, 14, 0.94);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 30px rgba(224,165,74,0.08);
+  font-family: var(--mono);
+  position: relative;
+  animation: terminalOpen 0.4s var(--ease) both;
+}
+
+@keyframes terminalOpen {
+  from { transform: scale(0.95) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.terminal-header {
+  height: 42px;
+  background: rgba(20, 20, 26, 0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.terminal-dot.close { background: #ff5f56; }
+.terminal-dot.minimize { background: #ffbd2e; }
+.terminal-dot.maximize { background: #27c93f; }
+
+.terminal-title {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.terminal-header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.terminal-action-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 0.2rem;
+}
+
+.terminal-action-btn:hover {
+  color: var(--accent);
+}
+
+.terminal-body {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: radial-gradient(circle at center, rgba(14, 14, 18, 0.4), #060608);
+}
+
+#terminal-matrix-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.15;
+  display: none;
+}
+
+.terminal-welcome,
+.terminal-log,
+.terminal-input-line {
+  position: relative;
+  z-index: 1;
+}
+
+.terminal-banner {
+  font-size: 8px;
+  line-height: 1.2;
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+  margin-bottom: 1rem;
+  white-space: pre;
+}
+
+.terminal-intro {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.terminal-highlight {
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent);
+}
+
+.terminal-log-entry {
+  font-size: 12px;
+  line-height: 1.6;
+  margin-bottom: 0.4rem;
+  white-space: pre-wrap;
+}
+
+.terminal-log-entry.command {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.terminal-log-entry.output {
+  color: var(--muted);
+}
+
+.terminal-log-entry.error {
+  color: #ff5f56;
+  text-shadow: 0 0 4px rgba(255,95,86,0.3);
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.terminal-prompt {
+  color: var(--accent-small);
+  font-size: 12px;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  caret-color: var(--accent);
+}
+
+/* Floating Terminal FAB */
+.terminal-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(14, 14, 18, 0.85);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  cursor: pointer;
+  z-index: 9997;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 15px rgba(224,165,74,0.15);
+  transition: all 0.3s var(--ease);
+  backdrop-filter: blur(8px);
+}
+
+.terminal-fab:hover {
+  transform: scale(1.1) translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 25px rgba(224,165,74,0.3);
+}
+
+.terminal-fab svg {
+  transition: transform 0.3s;
+}
+
+.terminal-fab:hover svg {
+  transform: rotate(5deg) scale(1.05);
+}
+
+/* Microphone Input Wrapper and Animations */
+.chat-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.chat-input-wrapper input {
+  padding-right: 3.5rem !important;
+}
+
+.chat-mic-btn {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 2;
+}
+
+.chat-mic-btn:hover {
+  color: var(--accent);
+  background: rgba(255,255,255,0.05);
+}
+
+.chat-mic-btn.listening {
+  color: #ff5f56;
+  background: rgba(255, 95, 86, 0.15);
+  box-shadow: 0 0 10px rgba(255, 95, 86, 0.3);
+}
+
+.mic-eq {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  height: 10px;
+}
+
+.chat-mic-btn.listening .mic-icon {
+  display: none;
+}
+
+.chat-mic-btn.listening .mic-eq {
+  display: flex;
+}
+
+.eq-bar {
+  width: 2px;
+  height: 100%;
+  background: #ff5f56;
+  border-radius: 1px;
+  animation: eqBounce 0.8s ease-in-out infinite alternate;
+}
+
+.eq-bar:nth-child(2) { animation-delay: 0.15s; }
+.eq-bar:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes eqBounce {
+  from { height: 2px; }
+  to { height: 10px; }
+}
+
+.voice-output-toggle {
+  transition: transform 0.2s;
+}
+.voice-output-toggle:hover {
+  transform: scale(1.15);
+}
 </style>
 </head>
 <body>
@@ -1884,6 +2330,28 @@ footer {
     <li><a href="#leadership">Leadership</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  
+  <div class="theme-dropdown-container">
+    <button class="theme-dropdown-trigger" id="themeBtn" aria-label="Toggle mood theme">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a7 7 0 00-7 7c0 3.87 3.13 7 7 7a1.5 1.5 0 011.5 1.5c0 .38-.15.75-.41 1.01-.26.26-.41.63-.41 1.01 0 .83.67 1.48 1.5 1.48 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      <span class="active-theme-dot"></span>
+    </button>
+    <div class="theme-dropdown-menu" id="themeMenu">
+      <button class="theme-menu-item active" data-theme="cozy">
+        <span class="theme-color-preview cozy"></span> Cozy Amber
+      </button>
+      <button class="theme-menu-item" data-theme="matrix">
+        <span class="theme-color-preview matrix"></span> Matrix Cyber
+      </button>
+      <button class="theme-menu-item" data-theme="cyberpunk">
+        <span class="theme-color-preview cyberpunk"></span> Hyperdrive Neon
+      </button>
+      <button class="theme-menu-item" data-theme="frost">
+        <span class="theme-color-preview frost"></span> Arctic Drift
+      </button>
+    </div>
+  </div>
+
   <a href="#contact" class="nav-cta">Let's Talk</a>
   <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
@@ -2316,7 +2784,10 @@ footer {
           <div class="panel-heading">
             <div>
               <div class="panel-kicker">AI Clone</div>
-              <h3>Talk to my AI clone</h3>
+              <h3 style="display:flex; align-items:center; gap:0.5rem;">
+                Talk to my AI clone
+                <button type="button" class="voice-output-toggle" id="voiceOutputToggle" title="Toggle voice answers" style="background:transparent; border:none; color:var(--muted); cursor:pointer; font-size:12px; display:inline-flex; align-items:center; justify-content:center; padding: 0;">🔇</button>
+              </h3>
             </div>
             <div class="panel-mini">OpenAI + LangChain ready</div>
           </div>
@@ -2324,7 +2795,17 @@ footer {
           <div class="prompt-row" id="brain-prompts"></div>
           <div class="chat-window" id="brain-chat-log" aria-live="polite"></div>
           <form class="chat-form" id="brain-chat-form">
-            <input id="brain-chat-input" type="text" placeholder="Ask about Materix, my stack, or a hard bug..." autocomplete="off">
+            <div class="chat-input-wrapper">
+              <input id="brain-chat-input" type="text" placeholder="Ask about Materix, my stack, or a hard bug..." autocomplete="off">
+              <button type="button" class="chat-mic-btn" id="chatMicBtn" title="Speak to AI Clone">
+                <svg class="mic-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>
+                <div class="mic-eq" id="micEq">
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                </div>
+              </button>
+            </div>
             <button type="submit" class="chat-send">
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </button>
@@ -2501,6 +2982,49 @@ footer {
     <div class="character-legs">
       <div class="character-leg left"></div>
       <div class="character-leg right"></div>
+    </div>
+</div>
+
+<!-- Floating Terminal FAB -->
+<div class="terminal-fab" id="terminalFab" onclick="toggleTerminal()" title="Open System Console">
+  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+</div>
+
+<!-- Retro Terminal Overlay -->
+<div class="terminal-overlay" id="terminalOverlay">
+  <div class="terminal-container">
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <span class="terminal-dot close" onclick="toggleTerminal()"></span>
+        <span class="terminal-dot minimize" onclick="toggleTerminal()"></span>
+        <span class="terminal-dot maximize" onclick="toggleTerminal()"></span>
+      </div>
+      <div class="terminal-title">KULSUM_SHELL v1.4 // DEC ENGINE</div>
+      <div class="terminal-header-actions">
+        <button class="terminal-action-btn" id="terminalSoundToggle" title="Toggle Sound">🔇</button>
+        <button class="terminal-action-btn" id="terminalMatrixBtn" title="Toggle Digital Rain">🌧️</button>
+      </div>
+    </div>
+    <div class="terminal-body" id="terminalBody">
+      <canvas id="terminal-matrix-canvas"></canvas>
+      <div class="terminal-welcome">
+        <pre class="terminal-banner">
+██╗  ██╗██╗   ██╗██╗     ███████╗██╗   ██╗███╗   ███╗
+██║ ██╔╝██║   ██║██║     ██╔════╝██║   ██║████╗ ████║
+█████╔╝ ██║   ██║██║     ███████╗██║   ██║██╔████╔██║
+██╔═██╗ ██║   ██║██║     ╚════██║██║   ██║██║╚██╔╝██║
+██║  ██╗╚██████╔╝███████╗███████║╚██████╔╝██║ ╚═╝ ██║
+╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚═╝     ╚═╝
+        </pre>
+        <p class="terminal-intro">KULSUM_SYSTEM_DIAGNOSTICS v1.4.2 [ONLINE]</p>
+        <p class="terminal-intro">Welcome, operator. Type <span class="terminal-highlight">help</span> for available routines.</p>
+        <br>
+      </div>
+      <div class="terminal-log" id="terminalLog"></div>
+      <div class="terminal-input-line">
+        <span class="terminal-prompt">guest@kulsum_os:~$</span>
+        <input type="text" class="terminal-input" id="terminalInput" autofocus autocomplete="off" spellcheck="false">
+      </div>
     </div>
   </div>
 </div>
@@ -3196,6 +3720,475 @@ document.querySelectorAll('[data-brain-query]').forEach((chip) => {
     }
   });
 });
+
+// ==========================================
+// ====== NEXT-LEVEL PORTFOLIO ADDITIONS =====
+// ==========================================
+
+// --- 1. MOOD / THEME CONTROLLER LOGIC ---
+const themeBtn = document.getElementById('themeBtn');
+const themeMenu = document.getElementById('themeMenu');
+
+// Toggle dropdown
+if (themeBtn && themeMenu) {
+  themeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    themeMenu.classList.toggle('show');
+  });
+
+  document.addEventListener('click', () => {
+    themeMenu.classList.remove('show');
+  });
+}
+
+// Set active theme function
+function setTheme(theme) {
+  document.body.className = ''; // Reset classes
+  
+  if (theme !== 'cozy') {
+    document.body.classList.add(`theme-${theme}`);
+  }
+  
+  // Set active class in menu
+  document.querySelectorAll('.theme-menu-item').forEach(item => {
+    if (item.getAttribute('data-theme') === theme) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+
+  // Save to LocalStorage
+  localStorage.setItem('kulsum-portfolio-theme', theme);
+  
+  // Custom fireflies color sync
+  updateFirefliesTheme(theme);
+}
+
+// Bind menu item clicks
+document.querySelectorAll('.theme-menu-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const theme = item.getAttribute('data-theme');
+    setTheme(theme);
+  });
+});
+
+// Load theme on startup
+const savedTheme = localStorage.getItem('kulsum-portfolio-theme') || 'cozy';
+setTheme(savedTheme);
+
+// Fireflies dynamic colors mapping
+function updateFirefliesTheme(theme) {
+  if (typeof fireflies === 'undefined') return;
+  
+  let hues = ['143,170,123', '224,165,74', '212,129,94']; // Cozy defaults
+  
+  if (theme === 'matrix') {
+    hues = ['57,255,20', '0,255,102', '10,120,40'];
+  } else if (theme === 'cyberpunk') {
+    hues = ['255,0,127', '0,240,255', '150,0,255'];
+  } else if (theme === 'frost') {
+    hues = ['139,240,255', '124,168,184', '255,255,255'];
+  }
+  
+  fireflies.forEach(f => {
+    f.hue = hues[Math.floor(Math.random() * hues.length)];
+  });
+}
+
+
+// --- 2. RETRO DEV TERMINAL COMMAND CENTER LOGIC ---
+const terminalOverlay = document.getElementById('terminalOverlay');
+const terminalBody = document.getElementById('terminalBody');
+const terminalLog = document.getElementById('terminalLog');
+const terminalInput = document.getElementById('terminalInput');
+const terminalSoundToggle = document.getElementById('terminalSoundToggle');
+const terminalMatrixBtn = document.getElementById('terminalMatrixBtn');
+const terminalMatrixCanvas = document.getElementById('terminal-matrix-canvas');
+
+let isTerminalOpen = false;
+let terminalSoundEnabled = false;
+let matrixRainInterval = null;
+
+// Toggle open/close
+function toggleTerminal() {
+  isTerminalOpen = !isTerminalOpen;
+  terminalOverlay.classList.toggle('show', isTerminalOpen);
+  if (isTerminalOpen) {
+    terminalInput.focus();
+    playBeepSound(400, 0.05);
+    setTimeout(() => playBeepSound(600, 0.08), 80);
+    // Restart rain if active
+    if (terminalMatrixCanvas.style.display === 'block') {
+      startMatrixRain();
+    }
+  } else {
+    stopMatrixRain();
+  }
+}
+
+// Sound click handler
+if (terminalSoundToggle) {
+  terminalSoundToggle.addEventListener('click', () => {
+    terminalSoundEnabled = !terminalSoundEnabled;
+    terminalSoundToggle.textContent = terminalSoundEnabled ? '🔊' : '🔇';
+    playBeepSound(600, 0.05);
+  });
+}
+
+// Matrix rain button handler
+if (terminalMatrixBtn) {
+  terminalMatrixBtn.addEventListener('click', () => {
+    const isVisible = terminalMatrixCanvas.style.display === 'block';
+    if (isVisible) {
+      terminalMatrixCanvas.style.display = 'none';
+      stopMatrixRain();
+    } else {
+      terminalMatrixCanvas.style.display = 'block';
+      startMatrixRain();
+    }
+    playBeepSound(500, 0.05);
+  });
+}
+
+// Hotkey trigger: backtick/tilde
+document.addEventListener('keydown', (e) => {
+  if (e.key === '`' || e.key === '~') {
+    e.preventDefault();
+    toggleTerminal();
+  }
+});
+
+// Sound synthesiser (Web Audio API)
+function playBeepSound(freq, duration) {
+  if (!terminalSoundEnabled) return;
+  try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    
+    gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + duration);
+  } catch (err) {}
+}
+
+// Execute CLI commands
+if (terminalInput) {
+  terminalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const inputVal = terminalInput.value.trim();
+      terminalInput.value = '';
+      if (inputVal) {
+        processCommand(inputVal);
+      }
+    } else {
+      // Micro sound on keyboard tap
+      playBeepSound(250 + Math.random() * 100, 0.015);
+    }
+  });
+
+  // Clicking anywhere in the terminal focuses input
+  terminalBody.addEventListener('click', () => {
+    terminalInput.focus();
+  });
+}
+
+function printToLog(text, type = 'output') {
+  const entry = document.createElement('div');
+  entry.className = `terminal-log-entry ${type}`;
+  entry.innerHTML = text;
+  terminalLog.appendChild(entry);
+  terminalBody.scrollTop = terminalBody.scrollHeight;
+}
+
+function processCommand(rawCmd) {
+  const tokens = rawCmd.split(/\s+/);
+  const command = tokens[0].toLowerCase();
+  const args = tokens.slice(1);
+  
+  printToLog(`guest@kulsum_os:~$ ${rawCmd}`, 'command');
+  
+  switch(command) {
+    case 'help':
+      printToLog(
+        `AVAILABLE DIAGNOSTIC PROTOCOLS:
+  <span class="terminal-highlight">about</span>       - Dump system biographical snapshot.
+  <span class="terminal-highlight">skills</span>      - Print technical proficiency ledger.
+  <span class="terminal-highlight">projects</span>    - Query live application deployments.
+  <span class="terminal-highlight">theme [name]</span>- Override UI skin (cozy | matrix | cyberpunk | frost).
+  <span class="terminal-highlight">matrix</span>      - Toggle background digital rain stream.
+  <span class="terminal-highlight">joke</span>        - Pull robotic humor logs.
+  <span class="terminal-highlight">clear</span>       - Wipe log register.
+  <span class="terminal-highlight">exit</span>        - Terminate terminal session.`
+      );
+      break;
+      
+    case 'about':
+      printToLog(
+        `SYSTEM IDENTIFIER: Kulsum Malik
+ROLE: Full-Stack Developer & AI Enthusiast
+ACADEMIC: B.Tech CSE (AI & Robotics) at VIT Chennai (Grad 2028)
+CREDENTIALS: Science Olympiad Gold Medalist, Science Club President, Technical Project Lead.
+BIO: A product-minded full-stack engineer who builds live deployed applications that combine premium UX, clean architecture, and embedded intelligence.`
+      );
+      break;
+      
+    case 'skills':
+      printToLog(
+        `Technical ledgers:
+  [Languages]      : Java, C, C++, Python, JavaScript, SQL, HTML/CSS
+  [Frameworks]     : React, Node.js, Express, MongoDB, Framer Motion
+  [Platforms/Tools]: VS Code, GitHub, Linux, GCP, Jenkins, Android Studio, Supabase, Arduino
+  [Expertise]      : Full-Stack Engineering, AI Integration, Automation Scripts`
+      );
+      break;
+      
+    case 'projects':
+      printToLog(
+        `LIVE APPLICATION REGISTRY:
+  1. <a href="https://book-my-vibe-frontend.onrender.com/" target="_blank" class="terminal-highlight">Book My Vibe</a> (MERN ticket booking engine with real-time seats)
+  2. <a href="https://nex-vpn-nova.vercel.app/" target="_blank" class="terminal-highlight">NEXVPN</a> (Cybersecurity VPN dashboard and geolocation spoofing)
+  3. <a href="https://materix.vercel.app/" target="_blank" class="terminal-highlight">Materix</a> (Secure document portal with Supabase OAuth & parsing)
+  4. <a href="https://scalendra.vercel.app/" target="_blank" class="terminal-highlight">Scalendra</a> (Aesthetic layered calendar and productivity engine)
+Type the project link to launch the container.`
+      );
+      break;
+      
+    case 'theme':
+      const targetTheme = args[0] ? args[0].toLowerCase() : '';
+      if (['cozy', 'matrix', 'cyberpunk', 'frost'].includes(targetTheme)) {
+        setTheme(targetTheme);
+        printToLog(`Skin override successful: Activated theme [${targetTheme}].`);
+      } else {
+        printToLog(`Error: Please specify valid skin theme. Options: theme [cozy | matrix | cyberpunk | frost]`, 'error');
+      }
+      break;
+      
+    case 'matrix':
+      const isRainVisible = terminalMatrixCanvas.style.display === 'block';
+      if (isRainVisible) {
+        terminalMatrixCanvas.style.display = 'none';
+        stopMatrixRain();
+        printToLog('Matrix rain overlay stopped.');
+      } else {
+        terminalMatrixCanvas.style.display = 'block';
+        startMatrixRain();
+        printToLog('Digital matrix rain buffer loaded successfully.');
+      }
+      break;
+      
+    case 'joke':
+      const jokes = [
+        "Why do programmers prefer dark mode? Because light attracts bugs.",
+        "There are 10 kinds of people: those who understand binary, and those who don't.",
+        "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+        "Why do robots make terrible guitarists? Because they prefer microchips!"
+      ];
+      printToLog(jokes[Math.floor(Math.random() * jokes.length)]);
+      break;
+      
+    case 'clear':
+      terminalLog.innerHTML = '';
+      break;
+      
+    case 'exit':
+      toggleTerminal();
+      break;
+      
+    default:
+      printToLog(`Error: Directive [${command}] not recognized by shell. Type [help] to display catalog.`, 'error');
+  }
+}
+
+// Matrix rain animation
+function startMatrixRain() {
+  stopMatrixRain();
+  const canvas = terminalMatrixCanvas;
+  const ctx = canvas.getContext('2d');
+  
+  canvas.width = terminalBody.clientWidth;
+  canvas.height = terminalBody.clientHeight;
+  
+  const columns = Math.floor(canvas.width / 14);
+  const drops = Array(columns).fill(1);
+  const matrixChars = "010101100101011001010011ABCDEFHIJKLMNOPQRSTUVWXYZ".split("");
+  
+  function drawRain() {
+    // Semi-transparent black rect to leave trails
+    ctx.fillStyle = "rgba(10, 10, 14, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Green text styling
+    ctx.fillStyle = document.body.classList.contains('theme-cyberpunk') ? "#FF007F" : (document.body.classList.contains('theme-frost') ? "#8bf0ff" : "#39FF14");
+    ctx.font = "12px monospace";
+    
+    drops.forEach((y, x) => {
+      const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+      ctx.fillText(text, x * 14, y * 14);
+      
+      if (y * 14 > canvas.height && Math.random() > 0.975) {
+        drops[x] = 0;
+      }
+      drops[x]++;
+    });
+  }
+  
+  matrixRainInterval = setInterval(drawRain, 35);
+}
+
+function stopMatrixRain() {
+  if (matrixRainInterval) {
+    clearInterval(matrixRainInterval);
+    matrixRainInterval = null;
+  }
+}
+
+// Adjust terminal matrix sizes on resize
+window.addEventListener('resize', () => {
+  if (isTerminalOpen && terminalMatrixCanvas.style.display === 'block') {
+    terminalMatrixCanvas.width = terminalBody.clientWidth;
+    terminalMatrixCanvas.height = terminalBody.clientHeight;
+  }
+});
+
+
+// --- 3. SPEECH RECOGNITION & SYNTHESIS VOICE ASSISTANT LOGIC ---
+const chatMicBtn = document.getElementById('chatMicBtn');
+const brainChatInput = document.getElementById('brain-chat-input');
+const voiceOutputToggle = document.getElementById('voiceOutputToggle');
+
+let voiceEnabled = false;
+let speechRecognition = null;
+let isListening = false;
+
+// Setup Speech Recognition
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  speechRecognition = new SpeechRec();
+  speechRecognition.continuous = false;
+  speechRecognition.interimResults = false;
+  speechRecognition.lang = 'en-US';
+  
+  speechRecognition.onstart = () => {
+    isListening = true;
+    chatMicBtn.classList.add('listening');
+    if (voiceEnabled) window.speechSynthesis.cancel();
+  };
+  
+  speechRecognition.onend = () => {
+    isListening = false;
+    chatMicBtn.classList.remove('listening');
+  };
+  
+  speechRecognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    if (brainChatInput) {
+      brainChatInput.value = transcript;
+      // Proactively submit the prompt
+      setTimeout(() => {
+        const form = document.getElementById('brain-chat-form');
+        if (form) {
+          form.dispatchEvent(new Event('submit'));
+        }
+      }, 500);
+    }
+  };
+  
+  speechRecognition.onerror = () => {
+    isListening = false;
+    chatMicBtn.classList.remove('listening');
+  };
+}
+
+if (chatMicBtn && speechRecognition) {
+  chatMicBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (isListening) {
+      speechRecognition.stop();
+    } else {
+      speechRecognition.start();
+    }
+  });
+} else if (chatMicBtn) {
+  // Hide or disable if not supported
+  chatMicBtn.style.opacity = '0.3';
+  chatMicBtn.title = "Speech recognition not supported in this browser.";
+}
+
+// Voice synthesis toggles
+if (voiceOutputToggle) {
+  voiceOutputToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    voiceEnabled = !voiceEnabled;
+    voiceOutputToggle.textContent = voiceEnabled ? '🔊' : '🔇';
+    voiceOutputToggle.title = voiceEnabled ? 'Voice output: ENABLED' : 'Voice output: DISABLED';
+    
+    if (voiceEnabled) {
+      speakAIText("Voice assistant interface activated.");
+    } else {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+  });
+}
+
+// Speak AI Response aloud
+function speakAIText(text) {
+  if (!voiceEnabled || !('speechSynthesis' in window)) return;
+  
+  window.speechSynthesis.cancel(); // Stop current speaking
+  
+  // Clean markup from response if any
+  const cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = 'en-US';
+  utterance.rate = 1.05;
+  
+  // Try to find a high-quality female robotic sound if possible
+  const voices = window.speechSynthesis.getVoices();
+  const preferredVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Zira') || v.name.includes('Samantha') || v.name.includes('Female'));
+  if (preferredVoice) {
+    utterance.voice = preferredVoice;
+  }
+  
+  // Equalizer visual updates
+  utterance.onstart = () => {
+    if (voiceOutputToggle) voiceOutputToggle.textContent = '🔊';
+  };
+  
+  utterance.onend = () => {
+    if (voiceOutputToggle) voiceOutputToggle.textContent = '🔈';
+  };
+  
+  window.speechSynthesis.speak(utterance);
+}
+
+// Hook speaking to AI chatbot responses
+const originalAddChatMessage = addChatMessage;
+addChatMessage = function(role, text, meta) {
+  originalAddChatMessage(role, text, meta);
+  if (role === 'assistant' && meta === 'Local answer engine') {
+    speakAIText(text);
+  }
+};
+
+// Pre-fetch voices to load correctly
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.getVoices();
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+  }
+}
 
 // ===== SMOOTH SCROLL =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -1846,6 +1846,201 @@ footer {
   .stats-row { grid-template-columns: 1fr; }
   .brain-graph-shell { min-height: 620px; }
   .panel-heading { flex-direction: column; }
+}
+
+.brain-node-copy {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.brain-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.brain-metric {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  font-size: 12px;
+  color: var(--text);
+}
+
+.brain-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.brain-note {
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(224,165,74,0.08);
+  border: 1px solid rgba(224,165,74,0.14);
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.prompt-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.9rem 0 1rem;
+}
+
+.prompt-chip {
+  border: 1px solid var(--border2);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.prompt-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(224,165,74,0.35);
+}
+
+.chat-window {
+  height: 340px;
+  overflow: auto;
+  padding: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.chat-message {
+  max-width: 92%;
+  border-radius: 14px;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--border2);
+  background: rgba(255,255,255,0.03);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.chat-message.user {
+  align-self: flex-end;
+  background: rgba(224,165,74,0.09);
+  border-color: rgba(224,165,74,0.16);
+}
+
+.chat-message.assistant {
+  align-self: flex-start;
+}
+
+.chat-meta {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.chat-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.chat-form input {
+  width: 100%;
+  min-width: 0;
+  border-radius: 12px;
+  border: 1px solid var(--border2);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  padding: 0.9rem 1rem;
+  font: inherit;
+}
+
+.chat-form input::placeholder { color: var(--muted); }
+
+.chat-send {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(224,165,74,0.22);
+  border-radius: 12px;
+  background: var(--accent);
+  color: #111;
+  cursor: pointer;
+}
+
+.chat-footnote {
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .hero-wrapper { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+  .hero-visual { order: -1; display: flex; justify-content: center; }
+  .hero-desc { margin: 0 auto 2.5rem; }
+  .hero-actions { justify-content: center; }
+  .hero-badge { margin: 0 auto 2rem; }
+  .hero-greeting { margin: 0 auto 1rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .brain-layout { grid-template-columns: 1fr; }
+  .hero-signals { margin-left: auto; margin-right: auto; }
+  .hero-rotator { margin-left: auto; margin-right: auto; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  nav.scrolled { padding: 0.7rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .nav-links.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    background: rgba(6,6,8,0.97);
+    backdrop-filter: blur(20px);
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    z-index: 999;
+  }
+  .nav-links.mobile-open a { font-size: 18px; padding: 1rem 2rem; }
+  .hero { padding: 6rem 1.5rem 4rem; min-height: auto; }
+  section { padding: 4rem 1.5rem; }
+  .contact-section { padding: 5rem 1.5rem; }
+  .magic-divider { padding: 0 1.5rem; }
+  .leadership-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .mouse-glow { display: none; }
+  footer { padding: 2rem 1.5rem; }
+  .footer-inner { justify-content: center; text-align: center; }
+  .brain-graph-shell { min-height: 520px; }
+  .brain-node { min-width: 112px; max-width: 145px; }
+  .hero-signals { grid-template-columns: 1fr; }
+  .hero-console-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 2.8rem; }
+  .hero-photo-frame { width: 100%; }
+  .contact-big-text { font-size: 2.2rem; }
+  .contact-cards { flex-direction: column; align-items: center; }
+  .stats-row { grid-template-columns: 1fr; }
+  .brain-graph-shell { min-height: 620px; }
+  .panel-heading { flex-direction: column; }
   .chat-form { grid-template-columns: 1fr; }
   .chat-send { width: 100%; }
   .hero-actions { justify-content: stretch; }
@@ -1857,6 +2052,198 @@ footer {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ====== AI VOICE INTRO OVERLAY ====== */
+#voice-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #060608;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#voice-intro-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.vi-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245,230,200,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,230,200,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: viGridPulse 6s ease-in-out infinite;
+}
+@keyframes viGridPulse {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.vi-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent, #F5E6C8), transparent);
+  animation: viScanDown 3s linear infinite;
+  opacity: 0.5;
+}
+@keyframes viScanDown {
+  from { top: 0; }
+  to { top: 100%; }
+}
+.vi-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: rgba(245,230,200,0.4);
+  border-style: solid;
+}
+.vi-corner.tl { top: 24px; left: 24px; border-width: 2px 0 0 2px; }
+.vi-corner.tr { top: 24px; right: 24px; border-width: 2px 2px 0 0; }
+.vi-corner.bl { bottom: 24px; left: 24px; border-width: 0 0 2px 2px; }
+.vi-corner.br { bottom: 24px; right: 24px; border-width: 0 2px 2px 0; }
+.vi-avatar-ring {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.vi-avatar-ring::before,
+.vi-avatar-ring::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(245,230,200,0.2);
+  animation: viRingPulse 2.4s ease-in-out infinite;
+}
+.vi-avatar-ring::before { inset: -10px; animation-delay: 0s; }
+.vi-avatar-ring::after  { inset: -22px; animation-delay: 0.6s; }
+@keyframes viRingPulse {
+  0%,100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+.vi-avatar-inner {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(245,230,200,0.18), rgba(14,14,18,0.9));
+  border: 1.5px solid rgba(245,230,200,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-size: 2rem;
+  color: rgba(245,230,200,0.9);
+  box-shadow: 0 0 40px rgba(245,230,200,0.1);
+}
+.vi-waveform {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  z-index: 1;
+}
+.vi-bar {
+  width: 3px;
+  border-radius: 2px;
+  background: rgba(245,230,200,0.6);
+  height: 4px;
+  transition: height 0.15s ease;
+}
+.vi-waveform.active .vi-bar {
+  animation: viBarBounce 0.9s ease-in-out infinite alternate;
+}
+.vi-bar:nth-child(1)  { animation-delay: 0.00s; }
+.vi-bar:nth-child(2)  { animation-delay: 0.08s; }
+.vi-bar:nth-child(3)  { animation-delay: 0.16s; }
+.vi-bar:nth-child(4)  { animation-delay: 0.24s; }
+.vi-bar:nth-child(5)  { animation-delay: 0.32s; }
+.vi-bar:nth-child(6)  { animation-delay: 0.40s; }
+.vi-bar:nth-child(7)  { animation-delay: 0.48s; }
+.vi-bar:nth-child(8)  { animation-delay: 0.56s; }
+.vi-bar:nth-child(9)  { animation-delay: 0.64s; }
+.vi-bar:nth-child(10) { animation-delay: 0.72s; }
+.vi-bar:nth-child(11) { animation-delay: 0.60s; }
+.vi-bar:nth-child(12) { animation-delay: 0.48s; }
+@keyframes viBarBounce {
+  from { height: 4px; }
+  to   { height: 28px; }
+}
+.vi-subtitle-wrap {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 1.5rem;
+  min-height: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.vi-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(245,230,200,0.4);
+  text-transform: uppercase;
+}
+#vi-subtitle {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-weight: 600;
+  color: #F5E6C8;
+  letter-spacing: 0.01em;
+  min-height: 2.2rem;
+  text-shadow: 0 0 30px rgba(245,230,200,0.3);
+}
+.vi-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: #F5E6C8;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: viCursorBlink 0.8s step-end infinite;
+}
+@keyframes viCursorBlink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+#vi-skip {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  background: transparent;
+  border: 1px solid rgba(245,230,200,0.2);
+  color: rgba(245,230,200,0.5);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  z-index: 1;
+}
+#vi-skip:hover {
+  border-color: rgba(245,230,200,0.5);
+  color: rgba(245,230,200,0.9);
+  background: rgba(245,230,200,0.05);
+}
+/* ====== END AI VOICE INTRO ====== */
 </style>
 </head>
 <body>
@@ -1871,6 +2258,27 @@ footer {
 
 <!-- Fireflies Canvas -->
 <canvas id="fireflies-canvas"></canvas>
+
+<!-- AI VOICE INTRO -->
+<div id="voice-intro-overlay">
+  <div class="vi-grid"></div>
+  <div class="vi-scan-line"></div>
+  <div class="vi-corner tl"></div><div class="vi-corner tr"></div>
+  <div class="vi-corner bl"></div><div class="vi-corner br"></div>
+  <div class="vi-avatar-ring">
+    <div class="vi-avatar-inner">K</div>
+  </div>
+  <div class="vi-subtitle-wrap">
+    <div class="vi-label">System Initializing</div>
+    <div id="vi-subtitle"></div>
+  </div>
+  <div class="vi-waveform" id="vi-waveform">
+    <div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div>
+    <div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div>
+    <div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div>
+  </div>
+  <button id="vi-skip">Skip Intro</button>
+</div>
 
 <!-- NAV -->
 <nav id="navbar">
@@ -2180,6 +2588,23 @@ footer {
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </div>
       </a>
+
+      <div class="project-card project-no-link reveal reveal-delay-3" id="project-ai-voice-intro">
+        <div>
+          <div class="project-meta">
+            <span class="project-badge badge-frontend">AI Voice Introduction</span>
+            <span class="project-badge badge-featured">Futuristic Intro</span>
+          </div>
+          <h3 class="project-name">AI Voice Introduction</h3>
+          <p class="project-desc">A futuristic intro concept: "Hi, I'm Kulsum. Welcome to my digital workspace." Built around ElevenLabs voice cloning and animated subtitles for a cinematic first impression.</p>
+          <div class="project-stack">
+            <span class="stack-tag">ElevenLabs</span><span class="stack-tag">Voice Cloning</span><span class="stack-tag">Animated Subtitles</span>
+          </div>
+        </div>
+        <div class="project-link-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </div>
+      </div>
 
       <div class="project-card project-no-link reveal" id="project-carelytix">
         <div>
@@ -3209,6 +3634,101 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// ====== AI VOICE INTRO ======
+(function() {
+  // Don't show intro more than once per session
+  if (sessionStorage.getItem('vi-shown')) return;
+  sessionStorage.setItem('vi-shown', '1');
+
+  const overlay = document.getElementById('voice-intro-overlay');
+  const subtitleEl = document.getElementById('vi-subtitle');
+  const waveform   = document.getElementById('vi-waveform');
+  const skipBtn    = document.getElementById('vi-skip');
+  if (!overlay) return;
+
+  const INTRO_TEXT = "Hi, I'm Kulsum. Welcome to my digital workspace.";
+
+  function dismiss() {
+    overlay.classList.add('fade-out');
+    setTimeout(() => overlay.remove(), 900);
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  }
+
+  skipBtn.addEventListener('click', dismiss);
+
+  // Animated subtitle — character by character
+  function typeSubtitle(text, callback) {
+    subtitleEl.textContent = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'vi-cursor';
+    subtitleEl.appendChild(cursor);
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        subtitleEl.insertBefore(document.createTextNode(text[i]), cursor);
+        i++;
+      } else {
+        clearInterval(interval);
+        // Remove cursor after pause
+        setTimeout(() => {
+          cursor.style.display = 'none';
+          if (callback) callback();
+        }, 800);
+      }
+    }, 42);
+  }
+
+  // Web Speech API voice playback
+  // ── To use ElevenLabs instead: replace this function with a fetch() to the
+  //    ElevenLabs /v1/text-to-speech endpoint and play the returned audio blob.
+  function speakText(text, onEnd) {
+    if (!window.speechSynthesis) { onEnd && onEnd(); return; }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate   = 0.92;
+    utterance.pitch  = 1.05;
+    utterance.volume = 1;
+    // Pick a natural English voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const pref = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+               || voices.find(v => v.lang.startsWith('en'));
+    if (pref) utterance.voice = pref;
+    utterance.onend = onEnd;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Start the sequence after a short dramatic pause
+  setTimeout(() => {
+    // Activate waveform animation
+    if (waveform) waveform.classList.add('active');
+
+    // Ensure voices are loaded (Chrome quirk)
+    const startAll = () => {
+      speakText(INTRO_TEXT, () => {
+        if (waveform) waveform.classList.remove('active');
+        // Auto-dismiss 1.5s after speech ends
+        setTimeout(dismiss, 1500);
+      });
+      // Subtitle types slightly after speech starts
+      setTimeout(() => typeSubtitle(INTRO_TEXT), 120);
+    };
+
+    if (window.speechSynthesis) {
+      // Voices may not be ready immediately in some browsers
+      if (window.speechSynthesis.getVoices().length > 0) {
+        startAll();
+      } else {
+        window.speechSynthesis.addEventListener('voiceschanged', startAll, { once: true });
+        // Fallback: start anyway after 400ms
+        setTimeout(startAll, 400);
+      }
+    } else {
+      typeSubtitle(INTRO_TEXT, () => setTimeout(dismiss, 1500));
+    }
+  }, 600);
+})();
+// ====== END AI VOICE INTRO ======
 </script>
 </body>
 </html>

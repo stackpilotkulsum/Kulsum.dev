@@ -2053,166 +2053,105 @@ footer {
 ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* ====== AI VOICE INTRO OVERLAY ====== */
+/* ====== AI VOICE INTRO WIDGET ====== */
 #voice-intro-overlay {
   position: fixed;
-  inset: 0;
-  z-index: 999999;
-  background: #060608;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 99999;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  gap: 1rem;
+  padding: 0.85rem 1.2rem;
+  background: rgba(10, 10, 14, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245,230,200,0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,230,200,0.05);
+  min-width: 320px;
+  max-width: 90vw;
+  opacity: 0;
+  animation: viSlideUp 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards;
+}
+@keyframes viSlideUp {
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 #voice-intro-overlay.fade-out {
-  opacity: 0;
-  visibility: hidden;
+  animation: viSlideDown 0.4s ease forwards;
   pointer-events: none;
 }
-.vi-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(245,230,200,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,230,200,0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-  animation: viGridPulse 6s ease-in-out infinite;
+@keyframes viSlideDown {
+  to { opacity: 0; transform: translateX(-50%) translateY(20px); }
 }
-@keyframes viGridPulse {
-  0%,100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-.vi-scan-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent, #F5E6C8), transparent);
-  animation: viScanDown 3s linear infinite;
-  opacity: 0.5;
-}
-@keyframes viScanDown {
-  from { top: 0; }
-  to { top: 100%; }
-}
-.vi-corner {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  border-color: rgba(245,230,200,0.4);
-  border-style: solid;
-}
-.vi-corner.tl { top: 24px; left: 24px; border-width: 2px 0 0 2px; }
-.vi-corner.tr { top: 24px; right: 24px; border-width: 2px 2px 0 0; }
-.vi-corner.bl { bottom: 24px; left: 24px; border-width: 0 0 2px 2px; }
-.vi-corner.br { bottom: 24px; right: 24px; border-width: 0 2px 2px 0; }
 .vi-avatar-ring {
   position: relative;
-  width: 90px;
-  height: 90px;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
 }
-.vi-avatar-ring::before,
-.vi-avatar-ring::after {
+.vi-avatar-ring::before {
   content: '';
   position: absolute;
+  inset: -5px;
   border-radius: 50%;
-  border: 1px solid rgba(245,230,200,0.2);
-  animation: viRingPulse 2.4s ease-in-out infinite;
+  border: 1px solid rgba(245,230,200,0.25);
+  animation: viRingPulse 2s ease-in-out infinite;
 }
-.vi-avatar-ring::before { inset: -10px; animation-delay: 0s; }
-.vi-avatar-ring::after  { inset: -22px; animation-delay: 0.6s; }
 @keyframes viRingPulse {
-  0%,100% { opacity: 0.15; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
+  0%,100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.08); }
 }
 .vi-avatar-inner {
-  width: 90px;
-  height: 90px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(245,230,200,0.18), rgba(14,14,18,0.9));
-  border: 1.5px solid rgba(245,230,200,0.3);
+  background: radial-gradient(circle at 35% 35%, rgba(245,230,200,0.2), rgba(14,14,18,0.9));
+  border: 1px solid rgba(245,230,200,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Sora', sans-serif;
-  font-size: 2rem;
+  font-size: 1rem;
+  font-weight: 700;
   color: rgba(245,230,200,0.9);
-  box-shadow: 0 0 40px rgba(245,230,200,0.1);
+  box-shadow: 0 0 20px rgba(245,230,200,0.08);
 }
-.vi-waveform {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  height: 32px;
-  z-index: 1;
-}
-.vi-bar {
-  width: 3px;
-  border-radius: 2px;
-  background: rgba(245,230,200,0.6);
-  height: 4px;
-  transition: height 0.15s ease;
-}
-.vi-waveform.active .vi-bar {
-  animation: viBarBounce 0.9s ease-in-out infinite alternate;
-}
-.vi-bar:nth-child(1)  { animation-delay: 0.00s; }
-.vi-bar:nth-child(2)  { animation-delay: 0.08s; }
-.vi-bar:nth-child(3)  { animation-delay: 0.16s; }
-.vi-bar:nth-child(4)  { animation-delay: 0.24s; }
-.vi-bar:nth-child(5)  { animation-delay: 0.32s; }
-.vi-bar:nth-child(6)  { animation-delay: 0.40s; }
-.vi-bar:nth-child(7)  { animation-delay: 0.48s; }
-.vi-bar:nth-child(8)  { animation-delay: 0.56s; }
-.vi-bar:nth-child(9)  { animation-delay: 0.64s; }
-.vi-bar:nth-child(10) { animation-delay: 0.72s; }
-.vi-bar:nth-child(11) { animation-delay: 0.60s; }
-.vi-bar:nth-child(12) { animation-delay: 0.48s; }
-@keyframes viBarBounce {
-  from { height: 4px; }
-  to   { height: 28px; }
-}
-.vi-subtitle-wrap {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 0 1.5rem;
-  min-height: 3.5rem;
+.vi-body {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: 0.3rem;
+  min-width: 0;
 }
 .vi-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 9px;
+  letter-spacing: 0.18em;
   color: rgba(245,230,200,0.4);
   text-transform: uppercase;
 }
 #vi-subtitle {
   font-family: 'Sora', sans-serif;
-  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-size: 0.88rem;
   font-weight: 600;
   color: #F5E6C8;
-  letter-spacing: 0.01em;
-  min-height: 2.2rem;
-  text-shadow: 0 0 30px rgba(245,230,200,0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 20px rgba(245,230,200,0.25);
+  min-height: 1.3em;
 }
 .vi-cursor {
   display: inline-block;
-  width: 2px;
-  height: 1.1em;
+  width: 1.5px;
+  height: 0.85em;
   background: #F5E6C8;
-  margin-left: 2px;
+  margin-left: 1px;
   vertical-align: middle;
   border-radius: 1px;
   animation: viCursorBlink 0.8s step-end infinite;
@@ -2221,27 +2160,52 @@ footer {
   0%,100% { opacity: 1; }
   50% { opacity: 0; }
 }
+.vi-waveform {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.vi-bar {
+  width: 2px;
+  border-radius: 1px;
+  background: rgba(245,230,200,0.5);
+  height: 3px;
+}
+.vi-waveform.active .vi-bar {
+  animation: viBarBounce 0.7s ease-in-out infinite alternate;
+}
+.vi-bar:nth-child(1) { animation-delay: 0.00s; }
+.vi-bar:nth-child(2) { animation-delay: 0.08s; }
+.vi-bar:nth-child(3) { animation-delay: 0.16s; }
+.vi-bar:nth-child(4) { animation-delay: 0.24s; }
+.vi-bar:nth-child(5) { animation-delay: 0.32s; }
+.vi-bar:nth-child(6) { animation-delay: 0.40s; }
+.vi-bar:nth-child(7) { animation-delay: 0.48s; }
+.vi-bar:nth-child(8) { animation-delay: 0.32s; }
+@keyframes viBarBounce {
+  from { height: 3px; }
+  to   { height: 16px; }
+}
 #vi-skip {
-  position: absolute;
-  bottom: 2.5rem;
-  right: 2.5rem;
+  flex-shrink: 0;
   background: transparent;
-  border: 1px solid rgba(245,230,200,0.2);
-  color: rgba(245,230,200,0.5);
+  border: 1px solid rgba(245,230,200,0.15);
+  color: rgba(245,230,200,0.4);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  padding: 0.45rem 1rem;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.6rem;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: uppercase;
-  z-index: 1;
+  white-space: nowrap;
 }
 #vi-skip:hover {
-  border-color: rgba(245,230,200,0.5);
-  color: rgba(245,230,200,0.9);
-  background: rgba(245,230,200,0.05);
+  border-color: rgba(245,230,200,0.4);
+  color: rgba(245,230,200,0.8);
 }
 /* ====== END AI VOICE INTRO ====== */
 </style>
@@ -2259,25 +2223,20 @@ footer {
 <!-- Fireflies Canvas -->
 <canvas id="fireflies-canvas"></canvas>
 
-<!-- AI VOICE INTRO -->
+<!-- AI VOICE INTRO WIDGET -->
 <div id="voice-intro-overlay">
-  <div class="vi-grid"></div>
-  <div class="vi-scan-line"></div>
-  <div class="vi-corner tl"></div><div class="vi-corner tr"></div>
-  <div class="vi-corner bl"></div><div class="vi-corner br"></div>
   <div class="vi-avatar-ring">
     <div class="vi-avatar-inner">K</div>
   </div>
-  <div class="vi-subtitle-wrap">
-    <div class="vi-label">System Initializing</div>
+  <div class="vi-body">
+    <div class="vi-label">Kulsum.dev &mdash; AI Intro</div>
     <div id="vi-subtitle"></div>
   </div>
   <div class="vi-waveform" id="vi-waveform">
     <div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div>
     <div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div>
-    <div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div><div class="vi-bar"></div>
   </div>
-  <button id="vi-skip">Skip Intro</button>
+  <button id="vi-skip">✕</button>
 </div>
 
 <!-- NAV -->

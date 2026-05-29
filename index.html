@@ -2208,9 +2208,51 @@ footer {
   color: rgba(245,230,200,0.8);
 }
 /* ====== END AI VOICE INTRO ====== */
+
+/* ===== MAGICAL CLICK BURST ===== */
+.magic-burst-particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: #f5e6c8;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  box-shadow: 0 0 12px 2px rgba(224, 165, 74, 0.9);
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  animation: burstAnim 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes burstAnim {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+}
+
+/* ===== SHOOTING STARS ===== */
+.shooting-star {
+  position: fixed;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(245,230,200,1), rgba(255,255,255,0));
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transform: rotate(-45deg);
+  animation: shootingStarAnim linear infinite;
+}
+
+@keyframes shootingStarAnim {
+  0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
+  10% { opacity: 1; }
+  20% { transform: translateX(-300px) translateY(300px) rotate(-45deg); opacity: 0; }
+  100% { opacity: 0; }
+}
 </style>
 </head>
 <body>
+
+<!-- CRAZY 3D NEURAL BACKGROUND -->
+<div id="vanta-bg" style="position: fixed; z-index: -10; top: 0; left: 0; width: 100%; height: 100%;"></div>
 
 <!-- Floating Background glass -->
 <div class="glass-orb orb-v1"></div>
@@ -2222,6 +2264,12 @@ footer {
 
 <!-- Fireflies Canvas -->
 <canvas id="fireflies-canvas"></canvas>
+
+<!-- Shooting Stars -->
+<div class="shooting-star" style="top: 10%; left: 30%; width: 100px; animation-duration: 4s; animation-delay: 0s;"></div>
+<div class="shooting-star" style="top: 40%; left: 80%; width: 150px; animation-duration: 5s; animation-delay: 2s;"></div>
+<div class="shooting-star" style="top: 70%; left: 10%; width: 80px; animation-duration: 3.5s; animation-delay: 1.5s;"></div>
+<div class="shooting-star" style="top: 20%; left: 90%; width: 120px; animation-duration: 6s; animation-delay: 4s;"></div>
 
 <!-- AI VOICE INTRO WIDGET -->
 <div id="voice-intro-overlay">
@@ -2244,10 +2292,11 @@ footer {
   <a href="#" class="nav-logo">Kulsum.</a>
   <ul class="nav-links" id="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#brain">Inside My Brain</a></li>
-    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#leadership">Leadership</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -2375,6 +2424,47 @@ footer {
         <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label">Technologies</div></div>
         <div class="stat-card"><div class="stat-number">2028</div><div class="stat-label">Expected Graduation</div></div>
         <div class="stat-card"><div class="stat-number">AI</div><div class="stat-label">Specialisation</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="magic-divider"></div>
+
+<!-- EDUCATION -->
+<div class="section-wrapper" id="education-wrap">
+  <div class="section-bg" style="background-image:url('assets/about-bg.png'); filter: hue-rotate(45deg); opacity: 0.25;"></div>
+  <div class="section-bg-overlay"></div>
+  <section id="education">
+    <div class="section-header reveal">
+      <div class="section-tag">Education</div>
+      <h2 class="section-title">Academic <span class="highlight">journey</span></h2>
+    </div>
+    <div class="edu-timeline">
+      <div class="edu-item reveal">
+        <div class="edu-year">2024 — 2028</div>
+        <div class="edu-name">B.Tech in Computer Science & Engineering</div>
+        <div class="edu-detail">AI & Robotics Specialisation · Vellore Institute of Technology, Chennai</div>
+        <div class="courses-wrap">
+          <span class="course-chip">Data Structures</span>
+          <span class="course-chip">Algorithm Analysis</span>
+          <span class="course-chip">Artificial Intelligence</span>
+          <span class="course-chip">Database Management</span>
+          <span class="course-chip">Computer Architecture</span>
+          <span class="course-chip">Internet Technology</span>
+          <span class="course-chip">Systems Programming</span>
+          <span class="course-chip">Software Methodology</span>
+        </div>
+      </div>
+      <div class="edu-item reveal reveal-delay-1">
+        <div class="edu-year">2023</div>
+        <div class="edu-name">Higher Secondary Education</div>
+        <div class="edu-detail">Girls' High School and College, Prayagraj, Uttar Pradesh</div>
+        <div class="courses-wrap">
+          <span class="course-chip">ISC: 92%</span>
+          <span class="course-chip">ICSE: 95%</span>
+          <span class="course-chip">🥇 Science Olympiad Gold Medalist</span>
+        </div>
       </div>
     </div>
   </section>
@@ -2722,39 +2812,38 @@ footer {
 
 <div class="magic-divider"></div>
 
-<!-- EDUCATION -->
-<div class="section-wrapper" id="education-wrap">
-  <div class="section-bg" style="background-image:url('assets/about-bg.png'); filter: hue-rotate(45deg); opacity: 0.25;"></div>
+<!-- EXPERIENCE -->
+<div class="section-wrapper" id="experience-wrap">
+  <div class="section-bg" style="background-image:url('assets/contact-bg.png'); filter: hue-rotate(-30deg); opacity: 0.15;"></div>
   <div class="section-bg-overlay"></div>
-  <section id="education">
+  <section id="experience">
     <div class="section-header reveal">
-      <div class="section-tag">Education</div>
-      <h2 class="section-title">Academic <span class="highlight">journey</span></h2>
+      <div class="section-tag">Experience</div>
+      <h2 class="section-title">Professional <span class="highlight">growth</span></h2>
     </div>
     <div class="edu-timeline">
       <div class="edu-item reveal">
-        <div class="edu-year">2024 — 2028</div>
-        <div class="edu-name">B.Tech in Computer Science & Engineering</div>
-        <div class="edu-detail">AI & Robotics Specialisation · Vellore Institute of Technology, Chennai</div>
-        <div class="courses-wrap">
-          <span class="course-chip">Data Structures</span>
-          <span class="course-chip">Algorithm Analysis</span>
-          <span class="course-chip">Artificial Intelligence</span>
-          <span class="course-chip">Database Management</span>
-          <span class="course-chip">Computer Architecture</span>
-          <span class="course-chip">Internet Technology</span>
-          <span class="course-chip">Systems Programming</span>
-          <span class="course-chip">Software Methodology</span>
+        <div class="edu-year">Present</div>
+        <div class="edu-name">Future Vineto AI Technologies Private Limited</div>
+        <div class="edu-detail" style="color: var(--accent);">Software Engineering Intern</div>
+        <div style="margin-top: 1rem; color: var(--muted); font-size: 14px; line-height: 1.6;">
+          &bull; Collaborating actively within a fast-paced startup environment, adapting to agile methodology and translating software requirements into full-stack features alongside tech professionals.
         </div>
       </div>
       <div class="edu-item reveal reveal-delay-1">
-        <div class="edu-year">2023</div>
-        <div class="edu-name">Higher Secondary Education</div>
-        <div class="edu-detail">Girls' High School and College, Prayagraj, Uttar Pradesh</div>
-        <div class="courses-wrap">
-          <span class="course-chip">ISC: 92%</span>
-          <span class="course-chip">ICSE: 95%</span>
-          <span class="course-chip">🥇 Science Olympiad Gold Medalist</span>
+        <div class="edu-year">2026</div>
+        <div class="edu-name">Nexus Spring of Code (NSoC)</div>
+        <div class="edu-detail" style="color: var(--accent2);">Open Source Mentor &amp; Contributor</div>
+        <div style="margin-top: 1rem; color: var(--muted); font-size: 14px; line-height: 1.6;">
+          &bull; Managing repositories and reviewing incoming Pull Requests as a Project Mentor while contributing to core codebase feature tracks.
+        </div>
+      </div>
+      <div class="edu-item reveal reveal-delay-2">
+        <div class="edu-year">2026</div>
+        <div class="edu-name">Social Summer of Code (SSoC) &ndash; Season 5</div>
+        <div class="edu-detail" style="color: var(--accent3);">Open Source Contributor</div>
+        <div style="margin-top: 1rem; color: var(--muted); font-size: 14px; line-height: 1.6;">
+          &bull; Contributed across multiple open-source project domains, optimizing technical scripting and successfully merging structural code additions.
         </div>
       </div>
     </div>
@@ -3184,6 +3273,12 @@ const helpfulTips = {
     "She is a Science Olympiad Gold Medalist",
     "Currently pursuing B.Tech at VIT"
   ],
+  experience: [
+    "She is a Software Engineering Intern",
+    "She mentors open source projects",
+    "She translates requirements into full-stack features",
+    "She reviews pull requests and manages repositories"
+  ],
   leadership: [
     "She was Science Club President",
     "She is a Technical Lead",
@@ -3204,7 +3299,7 @@ let isMoving = false;
 // Detect current section
 function detectCurrentSection() {
   const scrollY = window.scrollY;
-  const sections = ['hero', 'about', 'skills', 'projects', 'brain', 'education', 'leadership', 'contact'];
+  const sections = ['hero', 'about', 'education', 'skills', 'projects', 'brain', 'experience', 'leadership', 'contact'];
   
   for (const section of sections) {
     const element = document.getElementById(section);
@@ -3702,6 +3797,57 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   }, 600);
 })();
 // ====== END AI VOICE INTRO ======
+
+// ===== MAGICAL CLICK BURST JS =====
+document.addEventListener('click', (e) => {
+  // Avoid bursting if clicking on the Voice Intro skip button
+  if (e.target.id === 'vi-skip') return;
+
+  const numParticles = 14;
+  for (let i = 0; i < numParticles; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'magic-burst-particle';
+    particle.style.left = e.clientX + 'px';
+    particle.style.top = e.clientY + 'px';
+    
+    // Random angle and distance
+    const angle = Math.random() * Math.PI * 2;
+    const distance = Math.random() * 70 + 30; // 30 to 100px
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+    
+    particle.style.setProperty('--tx', `calc(-50% + ${tx}px)`);
+    particle.style.setProperty('--ty', `calc(-50% + ${ty}px)`);
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+      particle.remove();
+    }, 700);
+  }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    VANTA.NET({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0xe0a54a,
+      backgroundColor: 0x060608,
+      points: 12.00,
+      maxDistance: 22.00,
+      spacing: 16.00,
+      showDots: true
+    });
+  });
 </script>
 </body>
 </html>

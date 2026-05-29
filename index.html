@@ -3597,8 +3597,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ====== AI VOICE INTRO ======
 (function() {
   // Don't show intro more than once per session
-  if (sessionStorage.getItem('vi-shown')) return;
-  sessionStorage.setItem('vi-shown', '1');
+  // if (sessionStorage.getItem('vi-shown')) return;
+  // sessionStorage.setItem('vi-shown', '1');
 
   const overlay = document.getElementById('voice-intro-overlay');
   const subtitleEl = document.getElementById('vi-subtitle');
@@ -3678,9 +3678,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       if (window.speechSynthesis.getVoices().length > 0) {
         startAll();
       } else {
-        window.speechSynthesis.addEventListener('voiceschanged', startAll, { once: true });
+        let hasStarted = false;
+        window.speechSynthesis.addEventListener('voiceschanged', () => {
+          if (!hasStarted) { hasStarted = true; startAll(); }
+        }, { once: true });
         // Fallback: start anyway after 400ms
-        setTimeout(startAll, 400);
+        setTimeout(() => {
+          if (!hasStarted) { hasStarted = true; startAll(); }
+        }, 400);
       }
     } else {
       typeSubtitle(INTRO_TEXT, () => setTimeout(dismiss, 1500));

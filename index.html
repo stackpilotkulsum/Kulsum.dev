@@ -3219,13 +3219,17 @@ function detectCurrentSection() {
 }
 
 // Show random tip
-function showRandomTip() {
+function showRandomTip(triggerVoice = false) {
   const section = detectCurrentSection();
   const tips = helpfulTips[section] || helpfulTips.hero;
   const randomTip = tips[Math.floor(Math.random() * tips.length)];
   
   speechBubble.textContent = randomTip;
   cartoonCharacter.classList.add('talking');
+  
+  if (triggerVoice && window.playAIVoice) {
+    window.playAIVoice(randomTip);
+  }
   
   setTimeout(() => {
     cartoonCharacter.classList.remove('talking');
@@ -3286,14 +3290,14 @@ function initCharacter() {
       const newSection = detectCurrentSection();
       if (newSection !== currentSection) {
         currentSection = newSection;
-        showRandomTip();
+        showRandomTip(true);
       }
     }, 500);
   });
   
   // Click to show tip
   cartoonCharacter.addEventListener('click', () => {
-    showRandomTip();
+    showRandomTip(true);
   });
 }
 
@@ -3610,26 +3614,28 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   function dismiss() {
     overlay.classList.add('fade-out');
-    setTimeout(() => overlay.remove(), 900);
+    setTimeout(() => { overlay.style.display = 'none'; }, 900);
     if (window.speechSynthesis) window.speechSynthesis.cancel();
   }
 
   skipBtn.addEventListener('click', dismiss);
 
+  let typeInterval = null;
+
   // Animated subtitle — character by character
   function typeSubtitle(text, callback) {
+    if (typeInterval) clearInterval(typeInterval);
     subtitleEl.textContent = '';
     const cursor = document.createElement('span');
     cursor.className = 'vi-cursor';
     subtitleEl.appendChild(cursor);
     let i = 0;
-    const interval = setInterval(() => {
+    typeInterval = setInterval(() => {
       if (i < text.length) {
         subtitleEl.insertBefore(document.createTextNode(text[i]), cursor);
         i++;
       } else {
-        clearInterval(interval);
-        // Remove cursor after pause
+        clearInterval(typeInterval);
         setTimeout(() => {
           cursor.style.display = 'none';
           if (callback) callback();
@@ -3639,8 +3645,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   }
 
   // Web Speech API voice playback
-  // ── To use ElevenLabs instead: replace this function with a fetch() to the
-  //    ElevenLabs /v1/text-to-speech endpoint and play the returned audio blob.
   function speakText(text, onEnd) {
     if (!window.speechSynthesis) { onEnd && onEnd(); return; }
     window.speechSynthesis.cancel();
@@ -3648,33 +3652,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     utterance.rate   = 0.92;
     utterance.pitch  = 1.05;
     utterance.volume = 1;
-    // Pick a natural English voice if available
     const voices = window.speechSynthesis.getVoices();
-    const pref = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
-               || voices.find(v => v.lang.startsWith('en'));
+    const femaleNames = ['zira', 'samantha', 'victoria', 'karen', 'tessa', 'melina', 'hazel', 'catherine', 'susan', 'google us english', 'google uk english female'];
+    let pref = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+            || voices.find(v => v.lang.startsWith('en') && femaleNames.some(name => v.name.toLowerCase().includes(name)))
+            || voices.find(v => v.lang.startsWith('en'));
     if (pref) utterance.voice = pref;
     utterance.onend = onEnd;
     window.speechSynthesis.speak(utterance);
   }
 
-  // Start the sequence after a short dramatic pause
-  setTimeout(() => {
-    // Activate waveform animation
+  window.playAIVoice = function(text) {
+    if (!overlay) return;
+    
+    // Reset overlay state
+    overlay.style.display = 'flex';
+    overlay.classList.remove('fade-out');
+    
     if (waveform) waveform.classList.add('active');
-
-    // Ensure voices are loaded (Chrome quirk)
+    
     const startAll = () => {
-      speakText(INTRO_TEXT, () => {
+      speakText(text, () => {
         if (waveform) waveform.classList.remove('active');
-        // Auto-dismiss 1.5s after speech ends
         setTimeout(dismiss, 1500);
       });
-      // Subtitle types slightly after speech starts
-      setTimeout(() => typeSubtitle(INTRO_TEXT), 120);
+      setTimeout(() => typeSubtitle(text), 120);
     };
 
     if (window.speechSynthesis) {
-      // Voices may not be ready immediately in some browsers
       if (window.speechSynthesis.getVoices().length > 0) {
         startAll();
       } else {
@@ -3682,14 +3687,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         window.speechSynthesis.addEventListener('voiceschanged', () => {
           if (!hasStarted) { hasStarted = true; startAll(); }
         }, { once: true });
-        // Fallback: start anyway after 400ms
         setTimeout(() => {
           if (!hasStarted) { hasStarted = true; startAll(); }
         }, 400);
       }
     } else {
-      typeSubtitle(INTRO_TEXT, () => setTimeout(dismiss, 1500));
+      typeSubtitle(text, () => setTimeout(dismiss, 1500));
     }
+  };
+
+  // Start the sequence after a short dramatic pause
+  setTimeout(() => {
+    window.playAIVoice(INTRO_TEXT);
   }, 600);
 })();
 // ====== END AI VOICE INTRO ======

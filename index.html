@@ -2289,8 +2289,8 @@ footer {
 </head>
 <body>
 
-<!-- Minimalist Background (Grid Removed) -->
-<div id="vanta-bg" style="display: none;"></div>
+<!-- Cinematic Volumetric Nebula Background -->
+<div id="vanta-bg" style="position: fixed; z-index: -10; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 2s ease-in-out;"></div>
 
 <!-- Floating Background glass -->
 <div class="glass-orb orb-v1"></div>
@@ -3853,6 +3853,31 @@ document.addEventListener('click', (e) => {
 });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<!-- Vanta grid removed for a minimalist aesthetic -->
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    // Initialize extremely premium, minimalist volumetric fog
+    VANTA.FOG({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      highlightColor: 0xe0a54a, /* Golden accent */
+      midtoneColor: 0x8faa7b,   /* Sage accent */
+      lowlightColor: 0x060608,  /* Deep background */
+      baseColor: 0x060608,      /* Deep background */
+      blurFactor: 0.70,
+      speed: 1.20,
+      zoom: 1.50
+    });
+
+    // Fade it in smoothly and keep it semi-transparent so it's super light
+    setTimeout(() => {
+      document.getElementById('vanta-bg').style.opacity = '0.5';
+    }, 500);
+  });
+</script>
 </body>
 </html>

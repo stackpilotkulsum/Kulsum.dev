@@ -2289,8 +2289,8 @@ footer {
 </head>
 <body>
 
-<!-- Cinematic Volumetric Nebula Background -->
-<div id="vanta-bg" style="position: fixed; z-index: -10; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 2s ease-in-out;"></div>
+<!-- Real-Time WebGL Fluid Dynamics Simulation -->
+<canvas id="fluid-canvas" style="position: fixed; z-index: -10; top: 0; left: 0; width: 100vw; height: 100vh;"></canvas>
 
 <!-- Floating Background glass -->
 <div class="glass-orb orb-v1"></div>
@@ -3852,31 +3852,37 @@ document.addEventListener('click', (e) => {
   }
 });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/webgl-fluid"></script>
 <script>
   window.addEventListener('DOMContentLoaded', () => {
-    // Initialize extremely premium, minimalist volumetric fog
-    VANTA.FOG({
-      el: "#vanta-bg",
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      highlightColor: 0xe0a54a, /* Golden accent */
-      midtoneColor: 0x8faa7b,   /* Sage accent */
-      lowlightColor: 0x060608,  /* Deep background */
-      baseColor: 0x060608,      /* Deep background */
-      blurFactor: 0.70,
-      speed: 1.20,
-      zoom: 1.50
+    // Initialize Advanced Real-Time WebGL Fluid Simulation
+    WebGLFluid(document.getElementById('fluid-canvas'), {
+      IMMEDIATE: true, 
+      TRIGGER: 'hover', 
+      SIM_RESOLUTION: 128,
+      DYE_RESOLUTION: 1024,
+      DENSITY_DISSIPATION: 1.5,
+      VELOCITY_DISSIPATION: 0.5,
+      PRESSURE: 0.4,
+      PRESSURE_ITERATIONS: 20,
+      CURL: 25,
+      SPLAT_RADIUS: 0.3,
+      SPLAT_FORCE: 6000,
+      SHADING: true,
+      COLORFUL: true,
+      COLOR_UPDATE_SPEED: 10,
+      PAUSED: false,
+      TRANSPARENT: true,
+      BLOOM: true,
+      BLOOM_ITERATIONS: 8,
+      BLOOM_RESOLUTION: 256,
+      BLOOM_INTENSITY: 0.6,
+      BLOOM_THRESHOLD: 0.4,
+      BLOOM_SOFT_KNEE: 0.7,
+      SUNRAYS: true,
+      SUNRAYS_RESOLUTION: 196,
+      SUNRAYS_WEIGHT: 0.5,
     });
-
-    // Fade it in smoothly and keep it semi-transparent so it's super light
-    setTimeout(() => {
-      document.getElementById('vanta-bg').style.opacity = '0.5';
-    }, 500);
   });
 </script>
 </body>

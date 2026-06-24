@@ -2450,6 +2450,122 @@ footer {
   .gallery-grid { column-count: 1; }
   .gallery-container { padding: 2rem 5% 4rem; }
 }
+
+/* ART PREVIEW COLLAGE */
+.art-tiny {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), opacity 0.4s;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 0.8;
+  cursor: pointer;
+}
+.art-tiny:nth-child(even) { transform: rotate(5deg) translateY(-5px); }
+.art-tiny:nth-child(odd) { transform: rotate(-5deg) translateY(5px); }
+.art-tiny:nth-child(3n) { transform: rotate(8deg) translateY(2px); }
+.art-tiny:nth-child(4n) { transform: rotate(-8deg) translateY(-2px); }
+.art-tiny:hover {
+  transform: scale(1.6) rotate(0) !important;
+  z-index: 10;
+  opacity: 1;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(224,165,74,0.3);
+}
+.art-tiny img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.8);
+  transition: filter 0.4s;
+}
+.art-tiny:hover img {
+  filter: saturate(1.2);
+}
+
+/* FULL GALLERY MODAL */
+.full-gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(6, 6, 8, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.full-gallery-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-close-area {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+.modal-content-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1800px;
+  padding: 4rem 2vw 8rem;
+  transform: translateY(50px) scale(0.95);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.full-gallery-modal.active .modal-content-wrapper {
+  transform: translateY(0) scale(1);
+}
+.modal-close-btn {
+  position: fixed;
+  top: 2rem;
+  right: 3rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s;
+}
+.modal-close-btn:hover {
+  background: rgba(224,165,74,0.2);
+  border-color: rgba(224,165,74,0.4);
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+.modal-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.modal-header h2 {
+  font-family: var(--heading);
+  font-size: 3rem;
+  font-weight: 800;
+  color: #fff;
+}
+.modal-header p {
+  color: var(--text);
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+/* Lightbox overlay fix */
+.lightbox {
+  z-index: 100000;
+}
 </style>
 </head>
 <body>
@@ -2501,7 +2617,7 @@ footer {
     <li><a href="#brain">Inside My Brain</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#leadership">Leadership</a></li>
-    <li><a href="#art">Art Gallery</a></li>
+    <li><a href="javascript:void(0)" onclick="openFullGallery()">Art Gallery</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Let's Talk</a>
@@ -3085,69 +3201,33 @@ footer {
 <div class="magic-divider"></div>
 
 <!-- ART GALLERY -->
-<div class="section-wrapper" id="art">
+<div class="section-wrapper" id="art-preview">
   <div class="section-bg" style="background-image:url('assets/hero-bg.png'); filter:hue-rotate(45deg) saturate(1.2); opacity:0.15;"></div>
   <div class="section-bg-overlay"></div>
-  <section class="gallery-section-full">
-    <div class="section-header reveal gallery-header-full">
-      <div class="section-tag">Creative Outlet</div>
-      <h2 class="section-title">My <span class="highlight">Paintings</span></h2>
-      <p class="section-subtitle">As a full-stack developer and AI engineering student, my world revolves around logic, structure, and code. But beyond the screen, I have a deep passion for painting. It's my creative escape—a space where colors and imagination take over. Here is a glimpse into the art I create when I'm not building software.</p>
+  <section class="gallery-section-full" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem;">
+    <div class="section-header reveal gallery-header-full" style="max-width: 900px; text-align: center;">
+      <div class="section-tag" style="justify-content: center; margin: 0 auto 1.5rem;">Creative Outlet</div>
+      <h2 class="section-title">My <span class="highlight">Artistic</span> Passion</h2>
+      <p class="section-subtitle" style="margin: 0 auto; font-size: 1.15rem; line-height: 1.8;">
+        Between training AI models and debugging complex codebases, I seek refuge in the strokes of a brush. Painting is my ultimate creative escape—a space where logic fades, and colors, emotions, and imagination take full control. No matter how demanding my schedule gets, I always carve out time for the canvas, translating my inner world into vibrant reality.
+      </p>
     </div>
     
-    <div class="gallery-container reveal reveal-delay-1">
-      <div class="gallery-grid">
-        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0002.jpg')">
-          <img src="IMG-20260624-WA0002.jpg" alt="Painting 1" class="gallery-img">
-          <div class="gallery-overlay">
-            <h3 class="gallery-overlay-title">Abstract Canvas</h3>
-            <p class="gallery-overlay-desc">A vibrant exploration of color dynamics.</p>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0003.jpg')">
-          <img src="IMG-20260624-WA0003.jpg" alt="Painting 2" class="gallery-img">
-          <div class="gallery-overlay">
-            <h3 class="gallery-overlay-title">Fluid Dreams</h3>
-            <p class="gallery-overlay-desc">Capturing the flow of thoughts through acrylics.</p>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0004.jpg')">
-          <img src="IMG-20260624-WA0004.jpg" alt="Painting 3" class="gallery-img">
-          <div class="gallery-overlay">
-            <h3 class="gallery-overlay-title">Serenity</h3>
-            <p class="gallery-overlay-desc">A peaceful composition blending warmth and cool tones.</p>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0005.jpg')">
-          <img src="IMG-20260624-WA0005.jpg" alt="Painting 4" class="gallery-img">
-          <div class="gallery-overlay">
-            <h3 class="gallery-overlay-title">Lost in Color</h3>
-            <p class="gallery-overlay-desc">A deep dive into layered hues and abstract shapes.</p>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0006.jpg')">
-          <img src="IMG-20260624-WA0006.jpg" alt="Painting 5" class="gallery-img">
-          <div class="gallery-overlay">
-            <h3 class="gallery-overlay-title">Ethereal</h3>
-            <p class="gallery-overlay-desc">Delicate brushwork bringing imagination to life.</p>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0007.jpg')">
-          <img src="IMG-20260624-WA0007.jpg" alt="Painting 6" class="gallery-img">
-          <div class="gallery-overlay">
-            <h3 class="gallery-overlay-title">Midnight Glow</h3>
-            <p class="gallery-overlay-desc">Contrasting light against a dark canvas.</p>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('WhatsApp Image 2026-06-24 at 14.42.58.jpeg')">
-          <img src="WhatsApp Image 2026-06-24 at 14.42.58.jpeg" alt="Painting 7" class="gallery-img">
-          <div class="gallery-overlay">
-            <h3 class="gallery-overlay-title">Nature's Whisper</h3>
-            <p class="gallery-overlay-desc">Inspired by the beautiful imperfections of the natural world.</p>
-          </div>
-        </div>
-      </div>
+    <div class="art-preview-collage reveal reveal-delay-1" style="margin: 3rem 0; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; max-width: 800px;">
+      <div class="art-tiny" onclick="openFullGallery()"><img src="IMG-20260624-WA0002.jpg" alt="preview"></div>
+      <div class="art-tiny" onclick="openFullGallery()"><img src="IMG-20260624-WA0003.jpg" alt="preview"></div>
+      <div class="art-tiny" onclick="openFullGallery()"><img src="IMG-20260624-WA0004.jpg" alt="preview"></div>
+      <div class="art-tiny" onclick="openFullGallery()"><img src="IMG-20260624-WA0005.jpg" alt="preview"></div>
+      <div class="art-tiny" onclick="openFullGallery()"><img src="IMG-20260624-WA0006.jpg" alt="preview"></div>
+      <div class="art-tiny" onclick="openFullGallery()"><img src="IMG-20260624-WA0007.jpg" alt="preview"></div>
+      <div class="art-tiny" onclick="openFullGallery()"><img src="WhatsApp Image 2026-06-24 at 14.42.58.jpeg" alt="preview"></div>
+      <div class="art-tiny" onclick="openFullGallery()"><img src="IMG_20260624_153726 (1).jpg" alt="preview"></div>
     </div>
+
+    <button onclick="openFullGallery()" class="btn-magic reveal reveal-delay-2" style="font-size: 1.2rem; padding: 1rem 3rem;">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      View My Art Gallery
+    </button>
   </section>
 </div>
 
@@ -4149,11 +4229,102 @@ document.addEventListener('click', (e) => {
   
   // Close on Escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = 'auto';
+    if (e.key === 'Escape') {
+      if (lightbox.classList.contains('active')) {
+        lightbox.classList.remove('active');
+        if (!document.getElementById('fullGalleryModal').classList.contains('active')) {
+          document.body.style.overflow = 'auto';
+        }
+      } else if (document.getElementById('fullGalleryModal').classList.contains('active')) {
+        closeFullGallery();
+      }
     }
   });
+</script>
+
+<!-- FULL SCREEN GALLERY MODAL -->
+<div id="fullGalleryModal" class="full-gallery-modal">
+  <div class="modal-close-area" onclick="closeFullGallery()"></div>
+  <div class="modal-content-wrapper">
+    <button class="modal-close-btn" onclick="closeFullGallery()">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-header">
+      <h2>The <span class="highlight">Gallery</span></h2>
+      <p>A collection of my paintings and creative works.</p>
+    </div>
+    <div class="gallery-container">
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0002.jpg')">
+          <img src="IMG-20260624-WA0002.jpg" alt="Painting 1" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Abstract Canvas</h3>
+            <p class="gallery-overlay-desc">A vibrant exploration of color dynamics.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0003.jpg')">
+          <img src="IMG-20260624-WA0003.jpg" alt="Painting 2" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Fluid Dreams</h3>
+            <p class="gallery-overlay-desc">Capturing the flow of thoughts through acrylics.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0004.jpg')">
+          <img src="IMG-20260624-WA0004.jpg" alt="Painting 3" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Serenity</h3>
+            <p class="gallery-overlay-desc">A peaceful composition blending warmth and cool tones.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0005.jpg')">
+          <img src="IMG-20260624-WA0005.jpg" alt="Painting 4" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Lost in Color</h3>
+            <p class="gallery-overlay-desc">A deep dive into layered hues and abstract shapes.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0006.jpg')">
+          <img src="IMG-20260624-WA0006.jpg" alt="Painting 5" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Ethereal</h3>
+            <p class="gallery-overlay-desc">Delicate brushwork bringing imagination to life.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0007.jpg')">
+          <img src="IMG-20260624-WA0007.jpg" alt="Painting 6" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Midnight Glow</h3>
+            <p class="gallery-overlay-desc">Contrasting light against a dark canvas.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('WhatsApp Image 2026-06-24 at 14.42.58.jpeg')">
+          <img src="WhatsApp Image 2026-06-24 at 14.42.58.jpeg" alt="Painting 7" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Nature's Whisper</h3>
+            <p class="gallery-overlay-desc">Inspired by the beautiful imperfections of the natural world.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG_20260624_153726 (1).jpg')">
+          <img src="IMG_20260624_153726 (1).jpg" alt="Painting 8" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Textured Illusion</h3>
+            <p class="gallery-overlay-desc">A mesmerizing blend of colors and intricate textures.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openFullGallery() {
+    document.getElementById('fullGalleryModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeFullGallery() {
+    document.getElementById('fullGalleryModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
 </script>
 </body>
 </html>

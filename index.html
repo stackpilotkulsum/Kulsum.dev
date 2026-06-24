@@ -2285,6 +2285,145 @@ footer {
   20% { transform: translateX(-300px) translateY(300px) rotate(-45deg); opacity: 0; }
   100% { opacity: 0; }
 }
+
+/* ===== GALLERY GRID ===== */
+.gallery-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  position: relative;
+  z-index: 1;
+}
+.gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.gallery-item {
+  flex: 1 1 calc(33.333% - 24px);
+  min-width: 300px;
+  height: 400px;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.gallery-item:nth-child(4n + 1) {
+  flex: 1 1 calc(50% - 24px);
+}
+.gallery-item:nth-child(4n + 4) {
+  flex: 1 1 calc(50% - 24px);
+}
+.gallery-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 40px rgba(224,165,74,0.15);
+  border-color: rgba(224,165,74,0.3);
+}
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease), filter 0.5s var(--ease);
+}
+.gallery-item:hover .gallery-img {
+  transform: scale(1.08);
+  filter: brightness(1.1) contrast(1.1);
+}
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(6,6,8,0.95) 0%, rgba(6,6,8,0.4) 40%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+.gallery-overlay-title {
+  font-family: var(--heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  transform: translateY(20px);
+  transition: transform 0.4s var(--ease);
+}
+.gallery-overlay-desc {
+  font-size: 0.95rem;
+  color: var(--text);
+  transform: translateY(20px);
+  transition: transform 0.4s var(--ease) 0.05s;
+}
+.gallery-item:hover .gallery-overlay-title,
+.gallery-item:hover .gallery-overlay-desc {
+  transform: translateY(0);
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,6,8,0.95);
+  backdrop-filter: blur(10px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+.lightbox.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.lightbox-img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transform: scale(0.95);
+  transition: transform 0.3s var(--ease);
+}
+.lightbox.active .lightbox-img {
+  transform: scale(1);
+}
+.lightbox-close {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.lightbox-close:hover {
+  background: rgba(255,255,255,0.2);
+  transform: rotate(90deg);
+}
+@media (max-width: 1024px) {
+  .gallery-item { flex: 1 1 calc(50% - 24px); }
+  .gallery-item:nth-child(n) { flex: 1 1 calc(50% - 24px); }
+}
+@media (max-width: 768px) {
+  .gallery-item { flex: 1 1 100%; height: 350px; }
+}
 </style>
 </head>
 <body>
@@ -2329,15 +2468,15 @@ footer {
 <nav id="navbar">
   <a href="#" class="nav-logo">Kulsum.</a>
   <ul class="nav-links" id="nav-links">
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="index.html#education">Education</a></li>
-    <li><a href="index.html#skills">Skills</a></li>
-    <li><a href="index.html#projects">Projects</a></li>
-    <li><a href="paintings.html">Art Gallery</a></li>
-    <li><a href="index.html#brain">Inside My Brain</a></li>
-    <li><a href="index.html#experience">Experience</a></li>
-    <li><a href="index.html#leadership">Leadership</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#art">Art Gallery</a></li>
+    <li><a href="#brain">Inside My Brain</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Let's Talk</a>
   <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
@@ -2748,6 +2887,73 @@ footer {
         </div>
       </div>
 
+    </div>
+  </section>
+</div>
+
+<!-- ART GALLERY -->
+<div class="section-wrapper" id="art">
+  <div class="section-bg" style="background-image:url('assets/hero-bg.png'); filter:hue-rotate(45deg) saturate(1.2); opacity:0.15;"></div>
+  <div class="section-bg-overlay"></div>
+  <section>
+    <div class="section-header reveal">
+      <div class="section-tag">Creative Outlet</div>
+      <h2 class="section-title">My <span class="highlight">Paintings</span></h2>
+      <p class="section-subtitle">As a full-stack developer and AI engineering student, my world revolves around logic, structure, and code. But beyond the screen, I have a deep passion for painting. It's my creative escape—a space where colors and imagination take over. Here is a glimpse into the art I create when I'm not building software.</p>
+    </div>
+    
+    <div class="gallery-container reveal reveal-delay-1">
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0002.jpg')">
+          <img src="IMG-20260624-WA0002.jpg" alt="Painting 1" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Abstract Canvas</h3>
+            <p class="gallery-overlay-desc">A vibrant exploration of color dynamics.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0003.jpg')">
+          <img src="IMG-20260624-WA0003.jpg" alt="Painting 2" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Fluid Dreams</h3>
+            <p class="gallery-overlay-desc">Capturing the flow of thoughts through acrylics.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0004.jpg')">
+          <img src="IMG-20260624-WA0004.jpg" alt="Painting 3" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Serenity</h3>
+            <p class="gallery-overlay-desc">A peaceful composition blending warmth and cool tones.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0005.jpg')">
+          <img src="IMG-20260624-WA0005.jpg" alt="Painting 4" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Lost in Color</h3>
+            <p class="gallery-overlay-desc">A deep dive into layered hues and abstract shapes.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0006.jpg')">
+          <img src="IMG-20260624-WA0006.jpg" alt="Painting 5" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Ethereal</h3>
+            <p class="gallery-overlay-desc">Delicate brushwork bringing imagination to life.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('IMG-20260624-WA0007.jpg')">
+          <img src="IMG-20260624-WA0007.jpg" alt="Painting 6" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Midnight Glow</h3>
+            <p class="gallery-overlay-desc">Contrasting light against a dark canvas.</p>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('WhatsApp Image 2026-06-24 at 14.42.58.jpeg')">
+          <img src="WhatsApp Image 2026-06-24 at 14.42.58.jpeg" alt="Painting 7" class="gallery-img">
+          <div class="gallery-overlay">
+            <h3 class="gallery-overlay-title">Nature's Whisper</h3>
+            <p class="gallery-overlay-desc">Inspired by the beautiful imperfections of the natural world.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </div>
@@ -3884,6 +4090,39 @@ document.addEventListener('click', (e) => {
       SUNRAYS_RESOLUTION: 196,
       SUNRAYS_WEIGHT: 0.5,
     });
+  });
+</script>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-close">&times;</div>
+  <img src="" alt="Enlarged Art" class="lightbox-img" id="lightbox-img">
+</div>
+
+<script>
+  // Lightbox Functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e.target !== lightboxImg) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+  }
+  
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
   });
 </script>
 </body>
